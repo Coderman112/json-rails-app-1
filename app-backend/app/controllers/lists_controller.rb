@@ -11,4 +11,12 @@ class ListsController < ApplicationController
         render json: list
     end
 
+    def create
+
+    end
+
+    def list_params
+
+    end
+
 end

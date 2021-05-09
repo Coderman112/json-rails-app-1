@@ -23,6 +23,13 @@ function appendLists(lists){
 function postList(e) {
     e.preventDefault()
     const userInput = e.target.children[1].value
-    const options = {}
-    fetch("http://localhost:3000/lists")
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify()
+}
+    fetch("http://localhost:3000/lists", options)
 }
