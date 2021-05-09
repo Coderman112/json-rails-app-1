@@ -1,3 +1,3 @@
 class ThingSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :content, :list_id
 end
