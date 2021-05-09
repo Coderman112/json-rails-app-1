@@ -1,3 +1,6 @@
+const listForm = document.getElementById('listForm')
+
+
 function fetchLists(){
     fetch("http://localhost:3000/lists")
     .then(resp => resp.json())
@@ -7,7 +10,7 @@ function fetchLists(){
 
 
 
-function appendLists(){
+function appendLists(lists){
     const listsDiv = document.getElementById('lists')
     for (let list of lists) {
         const li = document.createElement("li")
@@ -17,3 +20,9 @@ function appendLists(){
     }
 }
 
+function postList(e) {
+    e.preventDefault()
+    const userInput = e.target.children[1].value
+    const options = {}
+    fetch("http://localhost:3000/lists")
+}
