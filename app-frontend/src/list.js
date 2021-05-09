@@ -11,17 +11,17 @@ function fetchLists(){
 
 
 function appendLists(lists){
-    const listsDiv = document.getElementById('lists')
     for (let list of lists) {
-        const li = document.createElement("li")
-        li.innerText = list.name
-        listsDiv.appendChild(li)
-        appendThings.call(list.things, li)
+        appendList(list)
     }
 }
 
 function appendList(list) {
-    
+    const listsDiv = document.getElementById('lists')
+    const li = document.createElement("li")
+    li.innerText = list.name
+    listsDiv.appendChild(li)
+    appendThings.call(list.things, li)
 }
 
 function postList(e) {
