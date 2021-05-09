@@ -1,9 +1,11 @@
 function appendThings(things, element) {
+    const ul = document.createElement("ul")
+    element.append(ul)
     
     for (let thing of things) {
         const thingLi = document.createElement("li")
         thingLi.innerText = thing.content
-        element.append(thingLi)
+        ul.append(thingLi)
     }
 
 }

@@ -13,7 +13,7 @@ function appendLists(){
         const li = document.createElement("li")
         li.innerText = list.name
         listsDiv.appendChild(li)
-        appendThings(list.things, li)
+        appendThings.call(list.things, li)
     }
 }
 
