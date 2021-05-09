@@ -1,7 +1,7 @@
 function fetchLists(){
     fetch("http://localhost:3000/lists")
     .then(resp => resp.json())
-    // .then(lists => {appendLists(lists)})
+    // .then(theseLists=> {appendLists(theseLists)})
     .then(appendLists)
 }
 
@@ -13,6 +13,7 @@ function appendLists(){
         const li = document.createElement("li")
         li.innerText = list.name
         listsDiv.appendChild(li)
+        appendThings(list.things, li)
     }
 }
 
