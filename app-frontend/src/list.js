@@ -54,13 +54,17 @@ class List {
         appendThings(this.things, li)
     }
 
-    renderListShowPage = () => {
+    renderListShowPage() {
         const listContainer = document.getElementById('listContainer')
+        const backBtn = document.createElement('button')
         listContainer.children[1].innerHTML = ""
         listContainer.children[0].remove()
-    
-        this.appendList()
-        // appendThingForm()
+        backBtn.addEventListener('click', returnToHome)
+        backBtn.innerText = "Home"
+        listContainer.append(backBtn)
+        this.prependListShowPage()
+        this.appendThingForm()
+        this.addEditListener()
     }
 
     static fetchLists(){
