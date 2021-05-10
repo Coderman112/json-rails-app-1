@@ -1,12 +1,11 @@
-const listForm = document.getElementById('listForm')
-
-
 class List {
 
-    constructor(list) {
+    static allLists = []
+
+    constructor({name, id, things}) {
         this.name = list.name
         this.id = list.id
-        things.forEach(thing => new thing(thing))
+        things.forEach(thing => new Thing(thing))
         List.allLists.push(this)
         // this.bindThisValues()
     }
@@ -82,6 +81,9 @@ class List {
         div.append(span)
         div.append(ul)
         lists.prepend(div)
+        for (let thing of this.things) {
+            thing.appendThing(ul)
+        }
     }
 
     addEditListener() {
@@ -101,22 +103,6 @@ class List {
         `
         span.innerHTML = editForm
         document.getElementById('listForm').addEventListener('submit', this.addEditListener.bind(this))
-    }
-
-    static fetchLists(){
-        fetch("http://localhost:3000/lists")
-        .then(jsonToJS)
-        // .then(theseLists=> {appendLists(theseLists)})
-        .then(this.appendLists)
-    }
-    
-    
-    
-    static appendLists(lists){
-        for (let list of lists) {
-            let newList = new List(list)
-            newList.appendList()
-        }
     }
 
     editList(e) {
@@ -159,6 +145,57 @@ class List {
         `
         lists.innerHTML += thingForm
         document.getElementById('thingForm').addEventListener('submit', Thing.addThing.bing(this))
+    }
+
+
+    static fetchLists(){
+        fetch("http://localhost:3000/lists")
+        .then(jsonToJS)
+        // .then(theseLists=> {appendLists(theseLists)})
+        .then(this.appendListIndexPages)
+    }
+    
+    
+    
+    static appendListIndexPages(lists){
+        for (let list of List.allLists) {
+            let newList = new List(list)
+            newList.appendListIndexPage()
+        }
+    }
+
+    static appendListsOnReturnHome() {
+        for (let list of List.allLists) {
+            list.appendListIndexPage()
+        }
+    }
+
+    static postList(e) {
+        e.preventDefault()
+        const userInput = e.target.children[1].value
+        const body = {
+            list: {
+                name: userInput
+            }
+        }
+        const options = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(listObj)
+        }
+    
+    
+        fetch(`http://localhost:3000/lists/${this.id}`, options)
+        .then(jsonToJS)
+        .then(listObj => {
+            let list = List.allLists.find(list => list.id === listObj.id)
+            list.name = listObj.name
+            e.target.remove()
+            list.prependListShowPage()
+        })
     }
 
 }

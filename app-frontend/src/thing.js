@@ -1,8 +1,16 @@
-function appendThings(things, element) {
-    const ul = document.createElement("ul")
-    element.append(ul)
-    
-    for (let thing of things) {
+class Thing {
+
+    static allThings = []
+
+    constructor({id, content, listId}) {
+        this.id = id
+        this.content = content
+        this.listId = listId
+        Thing.allThings.push(this)
+    }
+
+
+    appendThing(ul) {
         const thingLi = document.createElement("li")
         const thingDelete = document.createElement("button")
         thingDelete.innerText = "Delete"
@@ -16,16 +24,15 @@ function appendThings(things, element) {
         ul.append(thingLi)
     }
 
-}
-
-function deleteThing(thingId, thingLi) {
-    fetch(`http://localhost:3000/things/${thingId}`, {
-        method: "DELETE"
-    }).then(jsonToJS)
-    .then(m => {
-        thingLi.remove()
-    })
-}
+    deleteThing(thingLi) {
+        fetch(`http://localhost:3000/things/${this.id}`, {
+            method: "DELETE"
+        }).then(jsonToJS)
+        .then(m => {
+            thingLi.remove()
+            Thing.allThings = Thing.allThings.filter(thing => thing.id !== this.id)
+        })
+    }
 
 function appendThingForm() {
     const lists = document.getElementById('lists')
@@ -40,6 +47,7 @@ function appendThingForm() {
     document.getElementById('thingForm').addEventListener('submit', addThing)
 }
 
-function addThing(e) {
-    e.preventDefault()
+    static addThing(e) {
+        e.preventDefault()
+}
 }
