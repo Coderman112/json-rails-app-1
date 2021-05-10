@@ -49,7 +49,7 @@ class List {
         }
     }
 
-    postList(e) {
+    static postList(e) {
         e.preventDefault()
         const userInput = e.target.children[1].value
         const body = {
@@ -77,6 +77,8 @@ class List {
     }
 
 }
+
+
 
 
 // function fetchLists(){

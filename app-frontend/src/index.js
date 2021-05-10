@@ -1,4 +1,4 @@
-listForm.addEventListener('submit', postList)
+listForm.addEventListener('submit', List.postList)
 List.fetchLists()
 
 function jsonToJS(resp){
