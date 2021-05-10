@@ -6,12 +6,27 @@ class List {
     constructor(list) {
         this.name = list.name
         this.id = list.id
-        this.things = list.things
-        this.bindThisValues()
+        things.forEach(thing => new thing(thing))
+        List.allLists.push(this)
+        // this.bindThisValues()
     }
 
-    bindThisValues() {
-        this.renderListShowPage = this.renderListShowPage.bind(this)
+    get things() {
+        return Thing.allThings.filter(thing => thing.listId === this.id)
+    }
+
+    // bindThisValues() {
+    //     this.renderListShowPage = this.renderListShowPage.bind(this)
+    // }
+
+    appendThings(element) {
+        const ul = document.createElement('ul')
+        ul.id = `list-${this.id}`
+        element.append(ul)
+
+        for (let thing of this.things) {
+            thing.appendThing(ul)
+        }
     }
 
     appendList() {
