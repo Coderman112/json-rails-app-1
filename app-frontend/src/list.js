@@ -89,6 +89,20 @@ class List {
         p.addEventListener('click', () => this.openEditForm(p))
     }
 
+    openEditForm(li){
+        const listsDiv = document.getElementById(`lists`)
+        const span = document.getElementById("list-span")
+        const editForm = `
+        <form id="listForm">
+            <label>List Name:</label>
+            <input type="text" value="${this.name}">
+            <input type="submit" value="Edit List">
+        </form>
+        `
+        span.innerHTML = editForm
+        document.getElementById('listForm').addEventListener('submit', this.addEditListener.bind(this))
+    }
+
     static fetchLists(){
         fetch("http://localhost:3000/lists")
         .then(jsonToJS)
