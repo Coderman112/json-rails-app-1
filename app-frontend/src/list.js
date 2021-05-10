@@ -7,32 +7,37 @@ class List {
         this.name = list.name
         this.id = list.id
         this.things = list.things
+        this.bindThisValues()
+    }
+
+    bindThisValues() {
+        this.renderListShowPage = this.renderListShowPage.bind(this)
     }
 
     appendList() {
         const listsDiv = document.getElementById('lists')
         const li = document.createElement("li")
-        li.innerText = this.name
-        let callBack = this.renderListShowPage
-        li.addEventListener('click', callBack)
+        li.innerText = this.name 
+        li.addEventListener('click', this.renderListShowPage.bind(this))
+        // li.addEventListener('click', this.renderListShowPage)
         listsDiv.append(li)
         appendThings(this.things, li)
     }
 
-    renderListShowPage() {
+    renderListShowPage = () => {
         const listContainer = document.getElementById('listContainer')
         listContainer.children[1].innerHTML = ""
         listContainer.children[0].remove()
     
         this.appendList()
-        appendThingForm()
+        // appendThingForm()
     }
 
     static fetchLists(){
         fetch("http://localhost:3000/lists")
         .then(jsonToJS)
         // .then(theseLists=> {appendLists(theseLists)})
-        .then(List.appendLists)
+        .then(this.appendLists)
     }
     
     
@@ -42,6 +47,33 @@ class List {
             let newList = new List(list)
             newList.appendList()
         }
+    }
+
+    postList(e) {
+        e.preventDefault()
+        const userInput = e.target.children[1].value
+        const body = {
+            list: {
+                name: userInput
+            }
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+    
+        e.target.reset()
+    
+        fetch("http://localhost:3000/lists", options)
+        .then(jsonToJS)
+        .then(list => {
+            let newList = new List(list)
+            newList.appendList(list)
+        })
     }
 
 }
@@ -72,39 +104,39 @@ class List {
 //     appendThings.call(list.things, li)
 // }
 
-function renderListShowPage(list) {
-    const listContainer = document.getElementById('listContainer')
-    listContainer.children[1].innerHTML = ""
-    listContainer.children[0].remove()
+// function renderListShowPage(list) {
+//     const listContainer = document.getElementById('listContainer')
+//     listContainer.children[1].innerHTML = ""
+//     listContainer.children[0].remove()
 
-    appendList(list)
-    appendThingForm()
-}
+//     appendList(list)
+//     appendThingForm()
+// }
 
-function postList(e) {
-    e.preventDefault()
-    e.target.reset
-    const userInput = e.target.children[1].value
-    const body = {
-        list: {
-            name: userInput
-        }
-    }
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify(body)
-    }
+// function postList(e) {
+//     e.preventDefault()
+//     e.target.reset
+//     const userInput = e.target.children[1].value
+//     const body = {
+//         list: {
+//             name: userInput
+//         }
+//     }
+//     const options = {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//             Accept: "application/json"
+//         },
+//         body: JSON.stringify(body)
+//     }
 
-    e.target.reset()
+//     e.target.reset()
 
-    fetch("http://localhost:3000/lists", options)
-    .then(jsonToJS)
-    .then(list => {
-        let newList = new List(list)
-        newList.appendList(list)
-    })
-}
+//     fetch("http://localhost:3000/lists", options)
+//     .then(jsonToJS)
+//     .then(list => {
+//         let newList = new List(list)
+//         newList.appendList(list)
+//     })
+// }
