@@ -13,39 +13,64 @@ class List {
         const listsDiv = document.getElementById('lists')
         const li = document.createElement("li")
         li.innerText = this.name
-        // li.addEventListener('click', (e) => renderListShowPage(this))
+        let callBack = this.renderListShowPage
+        li.addEventListener('click', callBack)
         listsDiv.append(li)
         appendThings(this.things, li)
     }
 
-}
-
-
-function fetchLists(){
-    fetch("http://localhost:3000/lists")
-    .then(jsonToJS)
-    // .then(theseLists=> {appendLists(theseLists)})
-    .then(appendLists)
-}
-
-
-
-function appendLists(lists){
-    for (let list of lists) {
-        let newList = new List(list)
-        newList.appendList()
-        appendList(list)
+    renderListShowPage() {
+        const listContainer = document.getElementById('listContainer')
+        listContainer.children[1].innerHTML = ""
+        listContainer.children[0].remove()
+    
+        this.appendList()
+        appendThingForm()
     }
+
+    static fetchLists(){
+        fetch("http://localhost:3000/lists")
+        .then(jsonToJS)
+        // .then(theseLists=> {appendLists(theseLists)})
+        .then(List.appendLists)
+    }
+    
+    
+    
+    static appendLists(lists){
+        for (let list of lists) {
+            let newList = new List(list)
+            newList.appendList()
+        }
+    }
+
 }
 
-function appendList(list) {
-    const listsDiv = document.getElementById('lists')
-    const li = document.createElement("li")
-    li.innerText = list.name
-    li.addEventListener('click', (e) => renderListShowPage(list))
-    listsDiv.appendChild(li)
-    appendThings.call(list.things, li)
-}
+
+// function fetchLists(){
+//     fetch("http://localhost:3000/lists")
+//     .then(jsonToJS)
+//     // .then(theseLists=> {appendLists(theseLists)})
+//     .then(appendLists)
+// }
+
+
+
+// function appendLists(lists){
+//     for (let list of lists) {
+//         let newList = new List(list)
+//         newList.appendList()
+//     }
+// }
+
+// function appendList(list) {
+//     const listsDiv = document.getElementById('lists')
+//     const li = document.createElement("li")
+//     li.innerText = list.name
+//     li.addEventListener('click', (e) => renderListShowPage(list))
+//     listsDiv.appendChild(li)
+//     appendThings.call(list.things, li)
+// }
 
 function renderListShowPage(list) {
     const listContainer = document.getElementById('listContainer')
