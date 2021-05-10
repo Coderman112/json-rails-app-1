@@ -67,6 +67,23 @@ class List {
         this.addEditListener()
     }
 
+    prependListShowPage() {
+        const lists = document.getElementById('lists')
+        const p = document.getElementById(`list-name-${this.id}`) || document.createElement("p")
+        const div = document.getElementById("list-div-show") || document.createElement("div")
+        const span = document.getElementById("list-span") || document.createElement("span")
+        const ul = document.getElementById('ul')
+        ul.id = `list-${this.id}`
+        span.id = "list-span"
+        p.innerText = this.name
+        p.id = `list-name-${this.id}`
+        div.id = "list-div-show"
+        span.append(p)
+        div.append(span)
+        div.append(ul)
+        lists.prepend(div)
+    }
+
     static fetchLists(){
         fetch("http://localhost:3000/lists")
         .then(jsonToJS)
