@@ -1,6 +1,26 @@
 const listForm = document.getElementById('listForm')
 
 
+class List {
+
+    constructor(list) {
+        this.name = list.name
+        this.id = list.id
+        this.things = list.things
+    }
+
+    appendList() {
+        const listsDiv = document.getElementById('lists')
+        const li = document.createElement("li")
+        li.innerText = this.name
+        // li.addEventListener('click', (e) => renderListShowPage(this))
+        listsDiv.append(li)
+        appendThings(this.things, li)
+    }
+
+}
+
+
 function fetchLists(){
     fetch("http://localhost:3000/lists")
     .then(jsonToJS)
@@ -12,6 +32,8 @@ function fetchLists(){
 
 function appendLists(lists){
     for (let list of lists) {
+        let newList = new List(list)
+        newList.appendList()
         appendList(list)
     }
 }
@@ -56,5 +78,8 @@ function postList(e) {
 
     fetch("http://localhost:3000/lists", options)
     .then(jsonToJS)
-    .then(list => appendList(list))
+    .then(list => {
+        let newList = new List(list)
+        newList.appendList(list)
+    })
 }
