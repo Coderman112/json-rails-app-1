@@ -36,6 +36,10 @@ function appendThingForm() {
             <input type="submit" value="Add Thing"/>
         </form>
     `
-    lists.innerHTML += thingForm
+    lists.innerHTML += thingForm 
     document.getElementById('thingForm').addEventListener('submit', addThing)
+}
+
+function addThing(e) {
+    e.preventDefault()
 }
