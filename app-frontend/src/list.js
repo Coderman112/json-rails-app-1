@@ -29,6 +29,21 @@ class List {
         }
     }
 
+    appendListIndexPage() {
+        const listsDiv = document.getElementById('lists')
+        const li = document.createElement("li")
+        const div = document.createElement("div")
+        const span = document.createElement("span")
+        span.id = "list-span"
+        li.innerText = this.name
+        li.id = `list-name-${this.id}`
+        li.addEventListener('click', this.renderListShowPage.bind(this))
+        span.append(li)
+        listsDiv.append(div)
+        div.append(span)
+        this.appendThings(div)
+    }
+
     appendList() {
         const listsDiv = document.getElementById('lists')
         const li = document.createElement("li")
