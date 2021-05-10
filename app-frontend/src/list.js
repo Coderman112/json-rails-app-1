@@ -119,30 +119,31 @@ class List {
         }
     }
 
-    static postList(e) {
+    editList(e) {
         e.preventDefault()
-        const userInput = e.target.children[1].value
-        const body = {
+        const name = e.target.children[1].value
+        const listObj = {
             list: {
-                name: userInput
+                name
             }
         }
         const options = {
-            method: "POST",
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json"
+                "Accept": "application/json"
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(listObj)
         }
     
-        e.target.reset()
     
-        fetch("http://localhost:3000/lists", options)
+        fetch(`http://localhost:3000/lists/${this.id}`, options)
         .then(jsonToJS)
-        .then(list => {
-            let newList = new List(list)
-            newList.appendList(list)
+        .then(listObj => {
+            let list = List.allLists.find(list => list.id === listObj.id)
+            list.name = listObj.name
+            e.target.remove()
+            list.prependListShowPage()
         })
     }
 
