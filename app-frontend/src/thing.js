@@ -18,8 +18,11 @@ function appendThings(things, element) {
 
 }
 
-function deleteThing(thingId) {
+function deleteThing(thingId, thingLi) {
     fetch(`http://localhost:3000/things/${thingId}`, {
         method: "DELETE"
+    }).then(jsonToJS)
+    .then(m => {
+        thingLi.remove()
     })
 }
