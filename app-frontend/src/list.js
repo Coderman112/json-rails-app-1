@@ -84,6 +84,11 @@ class List {
         lists.prepend(div)
     }
 
+    addEditListener() {
+        const p = document.getElementById(`list-name-${this.id}`)
+        p.addEventListener('click', () => this.openEditForm(p))
+    }
+
     static fetchLists(){
         fetch("http://localhost:3000/lists")
         .then(jsonToJS)
