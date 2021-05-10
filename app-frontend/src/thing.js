@@ -26,3 +26,16 @@ function deleteThing(thingId, thingLi) {
         thingLi.remove()
     })
 }
+
+function appendThingForm() {
+    const lists = document.getElementById('lists')
+    const thingForm = `
+        <form id="thingForm">
+            <label>Thing Content:</label>
+            <input id="thingContent"/>
+            <input type="submit" value="Add Thing"/>
+        </form>
+    `
+    lists.innerHTML += thingForm
+    document.getElementById('thingForm').addEventListener('submit', addThing)
+}
