@@ -147,6 +147,20 @@ class List {
         })
     }
 
+    appendThingForm() {
+        const lists = document.getElementById('lists')
+        const thingForm = `
+            <form id="thingForm">
+                <label>Thing Content:</label>
+                <input id="thingContent"/>
+                <input type="hidden" id="${this.id}"/>
+                <input type="submit" value="Add Thing"/>
+            </form>
+        `
+        lists.innerHTML += thingForm
+        document.getElementById('thingForm').addEventListener('submit', Thing.addThing.bing(this))
+    }
+
 }
 
 
